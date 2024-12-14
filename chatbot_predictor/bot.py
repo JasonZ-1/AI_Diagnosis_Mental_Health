@@ -1,11 +1,16 @@
 # if there is an error, run "pip install -U google-generativeai" to install the package for ai
+import sys
+
 try:
     import google.generativeai as genai
 except ModuleNotFoundError:
     import subprocess
-    import sys
+    
     subprocess.run([sys.executable, "-m", "pip", "install", "-U", "google-generativeai"])
     import google.generativeai as genai
+    
+with open("chatbot_predictor/ay.txt", "w") as f:
+    f.write(sys.argv[1])
 
 key = ""
 with open("chatbot_predictor/ApiKey.txt", "r") as f:

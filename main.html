@@ -5,39 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ai Diagnosis</title>
     <link rel="stylesheet" href="main.css">
+    <script src="main.js"></script>
 </head>
 <body>
-     <center>
-    <h1> Welcome  to  the  AI  Diagnosis!</h1>
-    <p> How are you feeling today?  <p>
-    <center>
-
-   
-
-
-    <form>
-        <input type="text" id="message" name="message" />
-        <input type="submit" value="Send" />
+    <h1 class = "main"> Welcome  to  the  AI  Diagnosis!</h1>
+    <p class = "main"> How are you feeling today?  <p>
+    <form class = "main">
+        <input type="text" id="message" name="message"/>
+        <input type="submit" value="Send" id = "submit"/>
     </form>
-</body>
-
-    <script>
-        function callBot() {
-            var message = document.getElementById("message").value;
-            document.getElementById("message").value = "";
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.write(this.responseText);
-                }
-            };
-            xhttp.open("GET", "chatbot.py?message=" + message, true);
-            xhttp.send();
-        }
-    </script>
-    <form onsubmit="callBot(); return false;">
-
-    </form>
-</body>
-
 </html>
