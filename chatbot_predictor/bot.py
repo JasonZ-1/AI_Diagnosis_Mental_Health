@@ -1,4 +1,11 @@
-import google.generativeai as genai
+# if there is an error, run "pip install -U google-generativeai" to install the package for ai
+try:
+    import google.generativeai as genai
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+    subprocess.run([sys.executable, "-m", "pip", "install", "-U", "google-generativeai"])
+    import google.generativeai as genai
 
 key = ""
 with open("chatbot_predictor/ApiKey.txt", "r") as f:
@@ -12,7 +19,7 @@ Someone has a cough. Provide a list of 15 yes or no questions about other sympto
 
 Use this JSON schema:
 
-Return: list[str]
+questions = list[str]
 """
 
 response = model.generate_content(prompt)
