@@ -26,20 +26,25 @@ app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        message = request.form.get("prompt")
 
-@app.route("/get_data", methods=["POST", "GET"])
-def get_data(message):
-    print("hello")
-    if not message:
-        return redirect("/")
-    
-    output = askAI(message).text
-    print(output)
-    
-    return output
+        if not message:
+            return redirect("/")
+        
+        output = askAI(f"""
+    Someone says this: {message}. Provide a list of 15 yes or no questions about other symptoms they may be having to try to predict a diagnosis. The questions should be related to a health problem they might be having. Provide the questions in JSON format.
+
+    Use this JSON schema:
+
+    questions = list[str]
+    """).text
+        
+        return render_template("index.html", output = output)
+    else:
+        return render_template("index.html")
     
 def askAI(message):
     key = os.getenv("API_KEY")
@@ -47,12 +52,6 @@ def askAI(message):
     genai.configure(api_key=key)
     model = genai.GenerativeModel("gemini-2.0-flash-exp", generation_config={"response_mime_type": "application/json"})
     
-    prompt = f"""
-    Someone says this: {message}. Provide a list of 15 yes or no questions about other symptoms they may be having to try to predict a diagnosis. The questions should be related to a health problem they might be having. Provide the questions in JSON format.
-
-    Use this JSON schema:
-
-    questions = list[str]
-    """
+    prompt = message
     response = model.generate_content(prompt)
     return response

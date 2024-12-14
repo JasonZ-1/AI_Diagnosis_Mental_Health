@@ -7,29 +7,15 @@
     <link rel="stylesheet" href="static\styles.css">
     <script src="main.js"></script>
 </head>
-<body>
+<body id = "mainbody">
     <h1 class = "main"> Welcome  to  the  AI  Diagnosis!</h1>
-    <p class = "main"> How are you feeling today?  <p>
-    <form class = "main" id = "ask">
+    <p class = "main" id = "asker"> How are you feeling today?  <p>
+    <form class = "main" action = "/" method = "POST" id = "main">
         <input name="prompt" type="text"/>
         <button type = "submit">Send</button>
     </form>
 
-    <p id = "response"></p>
-
-    <script>
-        document.getElementById('ask').addEventListener('submit', () => {
-            // Make a fetch request to the Flask route
-            fetch('/get_data')
-                .then(response => response.json()) // Parse JSON response
-                .then(data => {
-                    // Handle the data
-                    document.getElementById('response').textContent = JSON.stringify(data);
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-    </script>
+    <p id = "data" style="display: none;">{{output}}</p>
+    <p id = "display"></p>
+    <script src = "static\manager.js"></script>
 </html>
