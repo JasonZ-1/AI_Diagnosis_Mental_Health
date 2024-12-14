@@ -15,6 +15,7 @@ def check_symptom(symptom):
     keep_asking = "yes"
 
     while keep_asking == "yes":
+
         answer = input("Do you have " + symptom + "? ")
 
 
@@ -25,6 +26,5 @@ def check_symptom(symptom):
             keep_asking = "no"
         else:
             print("I didn't understand you, please try again!")
-
 
     return answer
