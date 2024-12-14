@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Diagnosis</title>
+    <link rel="stylesheet" href="static\styles.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1 class = "main"> Welcome  to  the  AI  Diagnosis!</h1>
+    <p class = "main"> How are you feeling today?  <p>
+    <form class = "main" id = "ask">
+        <input name="prompt" type="text"/>
+        <button type = "submit">Send</button>
+    </form>
+
+    <p id = "response"></p>
+
+    <script>
+        document.getElementById('ask').addEventListener('submit', () => {
+            // Make a fetch request to the Flask route
+            fetch('/get_data')
+                .then(response => response.json()) // Parse JSON response
+                .then(data => {
+                    // Handle the data
+                    document.getElementById('response').textContent = JSON.stringify(data);
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</html>
